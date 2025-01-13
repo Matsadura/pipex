@@ -6,7 +6,7 @@
 /*   By: zzaoui <zzaoui@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:56:43 by zzaoui            #+#    #+#             */
-/*   Updated: 2025/01/13 16:21:52 by zzaoui           ###   ########.fr       */
+/*   Updated: 2025/01/13 20:31:40 by zzaoui           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ char	**parse_env(char *envp[])
 	char		**paths;
 	int			i;
 
+	if (envp == NULL)
+		return (NULL);
 	i = 0;
+	str = NULL;
 	while (envp[i])
 	{
 		str = ft_strnstr(envp[i], "PATH=", 5);
@@ -31,6 +34,8 @@ char	**parse_env(char *envp[])
 			break ;
 		i++;
 	}
+	if (!str)
+		return (NULL);
 	paths = ft_split(str + 5, ':');
 	return (paths);
 }
@@ -62,29 +67,23 @@ char	*concat_path(char *cmd, char *path)
  * check_cmd_exist - Check if the command path exists and is executable
  * @cmd: The command name to check
  */
-char	*check_cmd_exist(char *cmd, char **envp)
+char	*check_cmd_exist(char *cmd, char **path)
 {
 	char	*cmd_path;
-	char	**path;
 	int		i;
 
-	if (cmd == NULL || envp == NULL)
-		return (NULL);
 	if (access(cmd, F_OK | X_OK) != -1)
 		return (ft_strdup(cmd));
-	path = parse_env(envp);
+	if (cmd == NULL || path == NULL)
+		return (NULL);
 	i = 0;
 	while (path[i] != NULL)
 	{
 		cmd_path = concat_path(cmd, path[i]);
 		if (access(cmd_path, F_OK | X_OK) == 0)
-		{
-			free_2darray(path);
 			return (cmd_path);
-		}
 		free(cmd_path);
 		i++;
 	}
-	free_2darray(path);
 	return (NULL);
 }
