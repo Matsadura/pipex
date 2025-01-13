@@ -6,7 +6,7 @@
 /*   By: zzaoui <zzaoui@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 18:27:40 by zzaoui            #+#    #+#             */
-/*   Updated: 2025/01/13 12:30:54 by zzaoui           ###   ########.fr       */
+/*   Updated: 2025/01/13 12:50:26 by zzaoui           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,11 @@
 
 # include <stddef.h>
 # include <stdlib.h>
+# include <stdint.h>
+# include <stdio.h>
 # include <limits.h>
 # include <unistd.h>
-# include <stdint.h>
+# include <fcntl.h>
 # include "ft_printf.h"
 
 /* Radius check functions */

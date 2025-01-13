@@ -1,9 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/wait.h>
-#include <fcntl.h>
-#include "libft/libft.h"
+#include "pipex.h"
 
 
 int	main(int ac, char **av, char *envp[])

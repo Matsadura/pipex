@@ -6,12 +6,12 @@
 /*   By: zzaoui <zzaoui@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 11:28:13 by zzaoui            #+#    #+#             */
-/*   Updated: 2025/01/13 11:30:03 by zzaoui           ###   ########.fr       */
+/*   Updated: 2025/01/13 12:43:44 by zzaoui           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
-#include "libft/libft.h"
+#include "pipex.h"
 
 /**
  * print_2darray - Prints a 2D array
@@ -105,7 +105,7 @@ int	main(int ac, char **av, char *envp[])
 	while (paths[i])
 	{
 		cmd_path = concat_path(av[1], paths[i]);
-		printf("%s\n", cmd_path);
+		ft_printf("%s\n", cmd_path);
 		free(cmd_path);
 		i++;
 	}
