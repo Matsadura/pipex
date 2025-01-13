@@ -6,7 +6,7 @@
 /*   By: zzaoui <zzaoui@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 18:27:40 by zzaoui            #+#    #+#             */
-/*   Updated: 2025/01/13 12:21:31 by zzaoui           ###   ########.fr       */
+/*   Updated: 2025/01/13 12:30:54 by zzaoui           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <limits.h>
 # include <unistd.h>
 # include <stdint.h>
+# include "ft_printf.h"
 
 /* Radius check functions */
 int		ft_isalpha(int c);
