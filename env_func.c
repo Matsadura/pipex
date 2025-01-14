@@ -34,7 +34,7 @@ char	**parse_env(char *envp[])
 			break ;
 		i++;
 	}
-	if (!str)
+	if (str == NULL)
 		return (NULL);
 	paths = ft_split(str + 5, ':');
 	return (paths);
@@ -64,10 +64,12 @@ char	*concat_path(char *cmd, char *path)
 }
 
 /**
- * check_cmd_exist - Check if the command path exists and is executable
+ * get_cmd - Check if the command path exists and is executable
+ * 			and returns the correct one if it exists
  * @cmd: The command name to check
+ * Return: The correct command otherwise NULL
  */
-char	*check_cmd_exist(char *cmd, char **path)
+char	*get_cmd(char *cmd, char **path)
 {
 	char	*cmd_path;
 	int		i;
