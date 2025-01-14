@@ -23,6 +23,6 @@ void	free_2darray(char **arr);
 /** Environment functions **/
 char	**parse_env(char *envp[]);
 char	*concat_path(char *cmd, char *path);
-char	*check_cmd_exist(char *cmd, char **envp);
+char	*get_cmd(char *cmd, char **path);
 
 #endif /* PIPEX_H */
