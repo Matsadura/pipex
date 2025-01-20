@@ -30,6 +30,6 @@ char	*get_cmd(char *cmd, char **path);
 /** File Descriptor functions**/
 void	dup_fd(int pipe_fd[], int file_fd, int mode);
 void	close_pipe(int pipe_fd[]);
-int		open_file(char **file_name, char **env, char **mode);
+int		open_file(char *file_name, char **env, char mode);
 
 #endif /* PIPEX_H */

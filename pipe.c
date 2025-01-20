@@ -6,7 +6,6 @@ int	main(int ac, char **av, char *envp[])
 	pid_t id1, id2;
 	int fd[2];
 	char **arg;
-	//char *env[] = {"/usr/bin", NULL};
 	char **env;
 	int	f;
 	int	ret;
@@ -23,11 +22,11 @@ int	main(int ac, char **av, char *envp[])
 	if (id1 == 0)
 	{
 		close(fd[0]);
-		if (access(av[1], F_OK | R_OK) != 0)
-		{
-			perror("IN file access failed");
-			exit(2);
-		}
+		//if (access(av[1], F_OK | R_OK) != 0)
+		//{
+		//	perror("IN file access failed");
+		//	exit(2);
+		//}
 		f = open(av[1], O_RDONLY, 0644);
 		dup2(f, 0);
 		close(f);
@@ -36,7 +35,7 @@ int	main(int ac, char **av, char *envp[])
 
 		arg = ft_split(av[2], ' ');
 		char *cmd = get_cmd(arg[0], env);
-		perror(cmd);
+		//perror(cmd);
 		ret = execve(cmd, arg, env);
 		if (ret == -1)
 		{

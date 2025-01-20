@@ -6,7 +6,7 @@
 /*   By: zzaoui <zzaoui@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 11:28:13 by zzaoui            #+#    #+#             */
-/*   Updated: 2025/01/13 12:43:44 by zzaoui           ###   ########.fr       */
+/*   Updated: 2025/01/13 15:59:30 by zzaoui           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,69 +46,16 @@ void	free_2darray(char **arr)
 	free(arr);
 }
 
-/**
- * parse_env - Parses the environment
- * @envp: The 2D array containing the environmental variables
- * Return: 2D array containing PATH variable members
- */
-char	**parse_env(char *envp[])
-{
-	int		i;
-	char	**paths;
-	const char	*str;
-
-	i = 0;
-	while (envp[i])
-	{
-		str = ft_strnstr(envp[i], "PATH=", 5);
-		if (str != NULL)
-			break ;
-		i++;
-	}
-	paths = ft_split(str + 5, ':');
-	return (paths);
-}
-
-/**
- * concat_path - Concatenates the command basename with a env path
- * @cmd: The command basename
- * @path: The env path
- * Return: The concatenation result
- */
-char	*concat_path(char *cmd, char *path)
-{
-	char	*result;
-	size_t	len;
-
-	if (cmd == NULL || path == NULL)
-		return (NULL);
-	len = ft_strlen(cmd) + ft_strlen(path) + 2;
-	result = malloc(len);
-	if (result == NULL)
-		return (NULL);
-	ft_strlcpy(result, path, len);
-	ft_strlcat(result, "/", len);
-	ft_strlcat(result, cmd, len);
-	return (result);
-}
 
 int	main(int ac, char **av, char *envp[])
 {
 	char	*cmd_path;
-	char	**paths;
 	int		i;
 
 	(void)ac;
-	paths = parse_env(envp);
-	print_2darray(paths);
 	i = 0;
-	while (paths[i])
-	{
-		cmd_path = concat_path(av[1], paths[i]);
-		ft_printf("%s\n", cmd_path);
-		free(cmd_path);
-		i++;
-	}
-	free_2darray(paths);
+	cmd_path = check_cmd_exist(av[1], envp);
+	ft_printf("%s\n", cmd_path);
+	free(cmd_path);
 	return (0);
 }

@@ -39,9 +39,13 @@
 //}
 
 /**
- *
+ * open_file - Open a file for reading or writing
+ * @file_name: The file to open
+ * @env: The env path
+ * @mode: STDIN or STDOUT
+ * Return: the new file descriptor
  */
-int	open_file(char **file_name, char **env, char **mode)
+int	open_file(char *file_name, char **env, char mode)
 {
 	int	fd;
 
@@ -68,6 +72,7 @@ void	dup_fd(int pipe_fd[], int file_fd, int mode)
 {
 	if (mode == 0)
 	{
+        close(pipe_fd[0]);
 		dup2(file_fd, 0);
 		close(file_fd);
 		dup2(pipe_fd[1], 1);
@@ -75,6 +80,7 @@ void	dup_fd(int pipe_fd[], int file_fd, int mode)
 	}
 	else if (mode == 1)
 	{
+        close(pipe_fd[1]);
 		dup2(file_fd, 1);
 		close(file_fd);
 		dup2(pipe_fd[0], 0);
