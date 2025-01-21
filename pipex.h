@@ -6,7 +6,7 @@
 /*   By: zzaoui <zzaoui@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:39:28 by zzaoui            #+#    #+#             */
-/*   Updated: 2025/01/20 17:37:09 by zzaoui           ###   ########.fr       */
+/*   Updated: 2025/01/21 18:15:18 by zzaoui           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,12 @@
 
 typedef struct s_pipex
 {
-    char    **env;
-    char    **av;
-    int     pipe_fd[2];    
-} t_pipex;
+	char	**env;
+	char	**av;
+	int		pipe_fd[2];
+}	t_pipex;
+
+void	t_init(t_pipex *strct, char **envp, char **av);
 
 /** 2D Array functions **/
 void	print_2darray(char **arr);
@@ -40,12 +42,12 @@ void	close_pipe(int pipe_fd[]);
 int		open_file(char *file_name, char **env, char mode);
 
 /** Error handling functions **/
-int	check_access(char *name, int mode);
 void	write_error(int mode, char *error_msg);
 void	read_error_buffer(char *file_name);
 void	print_error(void);
+int		check_access(char *name, int mode);
 
 /** Execution Functions */
-void    handle_child(char **env, char **av, int pipe_fd[], int mode);
+void	handle_child(t_pipex strct, int mode, int index);
 
 #endif /* PIPEX_H */
