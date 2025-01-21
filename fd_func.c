@@ -6,7 +6,7 @@
 /*   By: zzaoui <zzaoui@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 17:39:12 by zzaoui            #+#    #+#             */
-/*   Updated: 2025/01/20 17:41:09 by zzaoui           ###   ########.fr       */
+/*   Updated: 2025/01/21 18:17:33 by zzaoui           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	dup_fd(int pipe_fd[], int file_fd, int mode)
 {
 	if (mode == 0)
 	{
-        close(pipe_fd[0]);
+		close(pipe_fd[0]);
 		dup2(file_fd, 0);
 		close(file_fd);
 		dup2(pipe_fd[1], 1);
@@ -54,7 +54,7 @@ void	dup_fd(int pipe_fd[], int file_fd, int mode)
 	}
 	else if (mode == 1)
 	{
-        close(pipe_fd[1]);
+		close(pipe_fd[1]);
 		dup2(file_fd, 1);
 		close(file_fd);
 		dup2(pipe_fd[0], 0);
