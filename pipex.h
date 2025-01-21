@@ -18,6 +18,13 @@
 # include <errno.h>
 # include <string.h>
 
+typedef struct s_pipex
+{
+    char    **env;
+    char    **av;
+    int     pipe_fd[2];    
+} t_pipex;
+
 /** 2D Array functions **/
 void	print_2darray(char **arr);
 void	free_2darray(char **arr);
@@ -31,5 +38,14 @@ char	*get_cmd(char *cmd, char **path);
 void	dup_fd(int pipe_fd[], int file_fd, int mode);
 void	close_pipe(int pipe_fd[]);
 int		open_file(char *file_name, char **env, char mode);
+
+/** Error handling functions **/
+int	check_access(char *name, int mode);
+void	write_error(int mode, char *error_msg);
+void	read_error_buffer(char *file_name);
+void	print_error(void);
+
+/** Execution Functions */
+void    handle_child(char **env, char **av, int pipe_fd[], int mode);
 
 #endif /* PIPEX_H */

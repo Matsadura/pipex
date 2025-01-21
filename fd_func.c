@@ -12,32 +12,6 @@
 
 #include "pipex.h"
 
-///**
-// * read_file - Open a file for reading
-// * @file_name: File name to open
-// * Return: The file descriptor
-// */
-//int read_file(char *file_name)
-//{
-//    int fd;
-//
-//    fd = open(file_name, O_RDONLY);
-//    return (fd);
-//}
-//
-///**
-// * write_file - Open a file for writing
-// * @file_name: File name to open
-// * Return: The file descriptor
-// */
-//int write_file(char *file_name)
-//{
-//    int fd;
-//
-//    fd = open(file_name, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-//    return (fd);
-//}
-
 /**
  * open_file - Open a file for reading or writing
  * @file_name: The file to open
