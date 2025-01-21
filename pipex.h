@@ -29,26 +29,31 @@ typedef struct s_pipex
 void	t_init(t_pipex *strct, char **envp, char **av);
 
 /** 2D Array functions **/
+
 void	print_2darray(char **arr);
 void	free_2darray(char **arr);
 
 /** Environment functions **/
+
 char	**parse_env(char *envp[]);
 char	*concat_path(char *cmd, char *path);
 char	*get_cmd(char *cmd, char **path);
 
 /** File Descriptor functions**/
+
 void	dup_fd(int pipe_fd[], int file_fd, int mode);
 void	close_pipe(int pipe_fd[]);
 int		open_file(char *file_name, char **env, char mode);
 
 /** Error handling functions **/
+
 void	write_error(int mode, char *error_msg);
 void	handle_error_components(char *file_name);
 void	print_error(void);
 int		check_access(char *name, int mode);
 
 /** Execution Functions */
+
 void	handle_child(t_pipex strct, int mode, int index);
 
 #endif /* PIPEX_H */
