@@ -6,14 +6,17 @@
 /*   By: zzaoui <zzaoui@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 17:48:59 by zzaoui            #+#    #+#             */
-/*   Updated: 2025/01/20 17:49:01 by zzaoui           ###   ########.fr       */
+/*   Updated: 2025/01/21 18:25:22 by zzaoui           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
 /**
- * 
+ * check_access - Checks the command access
+ * @name: The command name
+ * @mode: Input or output
+ * Return: 0 in succes, -1 otherwise
  */
 int	check_access(char *name, int mode)
 {
@@ -26,14 +29,16 @@ int	check_access(char *name, int mode)
 	}
 	else if (access(name, X_OK) != 0)
 	{
-		write_error(mode, ft_strjoin(name ,": permission denied\n"));
+		write_error(mode, ft_strjoin(name, ": permission denied\n"));
 		return (-1);
 	}
 	return (0);
 }
 
 /**
- * 
+ * write_error - Write the error message in it's corresponding log file
+ * @mode: Input our output
+ * @error_msg: The error message to write
  */
 void	write_error(int mode, char *error_msg)
 {
@@ -53,19 +58,20 @@ void	write_error(int mode, char *error_msg)
 	free(error_msg);
 }
 
-
 /**
- * read_error_buffer
+ * handle_error_components - Reads the error in temporary log file, prints it,
+ *		and unlinks it.
+ * @file_name: The log file name
  */
-void	read_error_buffer(char *file_name)
+void	handle_error_components(char *file_name)
 {
-	int fd;
-	ssize_t	bytes;
 	char	buff[4096];
+	int		fd;
+	ssize_t	bytes;
 
 	fd = open(file_name, O_RDONLY);
 	if (fd < 0)
-		return;
+		return ;
 	bytes = 1;
 	while (bytes > 0)
 	{
@@ -78,10 +84,10 @@ void	read_error_buffer(char *file_name)
 }
 
 /**
- * print_error
+ * print_error - Wrapper around handle_error_components
  */
 void	print_error(void)
 {
-	read_error_buffer("cmd0_error.log");
-	read_error_buffer("cmd1_error.log");
+	handle_error_components("cmd0_error.log");
+	handle_error_components("cmd1_error.log");
 }

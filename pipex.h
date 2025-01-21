@@ -6,7 +6,7 @@
 /*   By: zzaoui <zzaoui@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:39:28 by zzaoui            #+#    #+#             */
-/*   Updated: 2025/01/21 18:15:18 by zzaoui           ###   ########.fr       */
+/*   Updated: 2025/01/21 18:31:00 by zzaoui           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <errno.h>
 # include <string.h>
 
+/** Components structure **/
 typedef struct s_pipex
 {
 	char	**env;
@@ -43,7 +44,7 @@ int		open_file(char *file_name, char **env, char mode);
 
 /** Error handling functions **/
 void	write_error(int mode, char *error_msg);
-void	read_error_buffer(char *file_name);
+void	handle_error_components(char *file_name);
 void	print_error(void);
 int		check_access(char *name, int mode);
 
