@@ -6,7 +6,7 @@
 /*   By: zzaoui <zzaoui@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:56:43 by zzaoui            #+#    #+#             */
-/*   Updated: 2025/01/13 20:31:40 by zzaoui           ###   ########.fr       */
+/*   Updated: 2025/01/22 15:22:25 by zzaoui           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ char	*get_cmd(char *cmd, char **path)
 	char	*cmd_path;
 	int		i;
 
+	if (open(cmd, O_DIRECTORY) != -1)
+		return (NULL);
 	if (access(cmd, F_OK | X_OK) != -1)
 		return (ft_strdup(cmd));
 	if (cmd == NULL || path == NULL)

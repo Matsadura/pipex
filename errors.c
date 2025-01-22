@@ -6,7 +6,7 @@
 /*   By: zzaoui <zzaoui@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 17:48:59 by zzaoui            #+#    #+#             */
-/*   Updated: 2025/01/21 18:25:22 by zzaoui           ###   ########.fr       */
+/*   Updated: 2025/01/22 15:28:16 by zzaoui           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,19 @@ int	check_access(char *name, int mode)
 {
 	if (name == NULL)
 		return (-1);
+	if (open(name, O_DIRECTORY) != -1)
+	{
+		write_error(mode, ft_strjoin(name, IS_DIR));
+		return (-1);
+	}
 	if (access(name, F_OK) != 0)
 	{
-		write_error(mode, ft_strjoin(name, ": command not found\n"));
+		write_error(mode, ft_strjoin(name, CMD_404));
 		return (-1);
 	}
 	else if (access(name, X_OK) != 0)
 	{
-		write_error(mode, ft_strjoin(name, ": permission denied\n"));
+		write_error(mode, ft_strjoin(name, CMD_403));
 		return (-1);
 	}
 	return (0);
@@ -72,6 +77,7 @@ void	handle_error_components(char *file_name)
 	fd = open(file_name, O_RDONLY);
 	if (fd < 0)
 		return ;
+	unlink(file_name);
 	bytes = 1;
 	while (bytes > 0)
 	{
@@ -80,7 +86,6 @@ void	handle_error_components(char *file_name)
 		ft_putstr_fd(buff, 2);
 	}
 	close(fd);
-	unlink(file_name);
 }
 
 /**

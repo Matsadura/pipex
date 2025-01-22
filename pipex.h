@@ -6,7 +6,7 @@
 /*   By: zzaoui <zzaoui@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:39:28 by zzaoui            #+#    #+#             */
-/*   Updated: 2025/01/21 18:31:00 by zzaoui           ###   ########.fr       */
+/*   Updated: 2025/01/22 15:27:29 by zzaoui           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,10 @@
 # include <sys/wait.h>
 # include <errno.h>
 # include <string.h>
+
+# define IS_DIR ": Is a directory\n"
+# define CMD_404 ": command not found\n"
+# define CMD_403 ": permission denied\n"
 
 /** Components structure **/
 typedef struct s_pipex
