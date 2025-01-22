@@ -6,7 +6,7 @@
 /*   By: zzaoui <zzaoui@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 17:48:59 by zzaoui            #+#    #+#             */
-/*   Updated: 2025/01/22 15:28:16 by zzaoui           ###   ########.fr       */
+/*   Updated: 2025/01/22 15:47:16 by zzaoui           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
  */
 int	check_access(char *name, int mode)
 {
-	if (name == NULL)
+	if (name == NULL || *name == '\0')
 		return (-1);
 	if (open(name, O_DIRECTORY) != -1)
 	{

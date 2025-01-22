@@ -6,7 +6,7 @@
 /*   By: zzaoui <zzaoui@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 17:21:38 by zzaoui            #+#    #+#             */
-/*   Updated: 2025/01/21 19:16:07 by zzaoui           ###   ########.fr       */
+/*   Updated: 2025/01/22 16:19:36 by zzaoui           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ int	main(int ac, char **av, char *envp[])
 	pid_t	id1;
 	pid_t	id2;
 
-	(void)ac;
+	if (ac != 5)
+		return (ft_printf("Usage: ./pipex in cmd1 cmd2 out\n"), -1);
 	t_init(&strct, envp, av);
 	if (pipe(strct.pipe_fd) == -1)
 		exit(-1);
