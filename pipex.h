@@ -6,7 +6,7 @@
 /*   By: zzaoui <zzaoui@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:39:28 by zzaoui            #+#    #+#             */
-/*   Updated: 2025/01/22 15:27:29 by zzaoui           ###   ########.fr       */
+/*   Updated: 2025/01/23 16:25:36 by zzaoui           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ char	*get_cmd(char *cmd, char **path);
 
 /** File Descriptor functions**/
 
-void	dup_fd(int pipe_fd[], int file_fd, int mode);
+void	dup_fd(t_pipex strct, char *file_name, int mode);
 void	close_pipe(int pipe_fd[]);
-int		open_file(char *file_name, char **env, char mode);
+int		open_file(char *file_name, t_pipex strct, char mode);
 
 /** Error handling functions **/
 

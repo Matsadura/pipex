@@ -6,7 +6,7 @@
 /*   By: zzaoui <zzaoui@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 17:39:12 by zzaoui            #+#    #+#             */
-/*   Updated: 2025/01/22 15:19:49 by zzaoui           ###   ########.fr       */
+/*   Updated: 2025/01/23 16:26:12 by zzaoui           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
  * @mode: STDIN or STDOUT
  * Return: the new file descriptor
  */
-int	open_file(char *file_name, char **env, char mode)
+int	open_file(char *file_name, t_pipex strct, char mode)
 {
 	int	fd;
 
@@ -31,7 +31,7 @@ int	open_file(char *file_name, char **env, char mode)
 	if (fd == -1)
 	{
 		perror(file_name);
-		free_2darray(env);
+		free_2darray(strct.env);
 		exit(13);
 	}
 	return (fd);
@@ -42,23 +42,28 @@ int	open_file(char *file_name, char **env, char mode)
  * @file_fd: open file descriptor
  * @pipe_fd: pipe line file descriptors
  */
-void	dup_fd(int pipe_fd[], int file_fd, int mode)
+void	dup_fd(t_pipex strct, char *file_name, int mode)
 {
+	int	file_fd;
+
+	file_fd = -1;
 	if (mode == 0)
 	{
-		close(pipe_fd[0]);
+		close(strct.pipe_fd[0]);
+		dup2(strct.pipe_fd[1], 1);
+		close(strct.pipe_fd[1]);
+		file_fd = open_file(file_name, strct, mode);
 		dup2(file_fd, 0);
 		close(file_fd);
-		dup2(pipe_fd[1], 1);
-		close(pipe_fd[1]);
 	}
 	else if (mode == 1)
 	{
-		close(pipe_fd[1]);
+		close(strct.pipe_fd[1]);
+		dup2(strct.pipe_fd[0], 0);
+		close(strct.pipe_fd[0]);
+		file_fd = open_file(file_name, strct, mode);
 		dup2(file_fd, 1);
 		close(file_fd);
-		dup2(pipe_fd[0], 0);
-		close(pipe_fd[0]);
 	}
 }
 
