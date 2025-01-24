@@ -1,5 +1,5 @@
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -g
+CFLAGS = -Wall -Werror -Wextra
 SRC = arr_func.c env_func.c errors.c execv_func.c fd_func.c pipex.c struct.c
 NAME = pipex
 LIBFT = libft/libft.a
