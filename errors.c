@@ -62,7 +62,7 @@ void	write_error(int mode, char *error_msg)
 		free(error_msg);
 		return ;
 	}
-	ft_putstr_fd(error_msg, fd);
+	ft_dprintf(fd, "%s", error_msg);
 	free(error_msg);
 }
 
@@ -86,7 +86,7 @@ void	handle_error_components(char *file_name)
 	{
 		bytes = read(fd, buff, sizeof(buff) - 1);
 		buff[bytes] = '\0';
-		ft_putstr_fd(buff, 2);
+		ft_dprintf(2, "%s", buff);
 	}
 	close(fd);
 }
