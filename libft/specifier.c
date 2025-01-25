@@ -40,9 +40,10 @@ int	init(t_spec **spec)
  * @s: the format specifier
  * @sp: the array of structs the contains {specifier, function}
  * 	collection
+ * @fd: the file descriptor to write in
  * Return: the number of written bytes
  */
-int	get_spec_func(char s, t_spec *sp, va_list arg)
+int	get_spec_func(char s, t_spec *sp, va_list arg, int fd)
 {
 	int	i;
 
@@ -50,8 +51,8 @@ int	get_spec_func(char s, t_spec *sp, va_list arg)
 	while (sp[i].spec != '\0')
 	{
 		if (sp[i].spec == s)
-			return (sp[i].f(arg));
+			return (sp[i].f(arg, fd));
 		i++;
 	}
-	return (write(1, &s, 1));
+	return (write(fd, &s, 1));
 }

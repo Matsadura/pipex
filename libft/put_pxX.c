@@ -16,9 +16,10 @@
  * put_x - Prints a number in hexadecimal
  *	lowercase format
  * @arg: the number to print (from va_list)
+ * @fd: the file descriptor to write in
  * Return: the number of writter bytes
  */
-int	put_xlower(va_list arg)
+int	put_xlower(va_list arg, int fd)
 {
 	char			buff[12];
 	char			*base;
@@ -29,7 +30,7 @@ int	put_xlower(va_list arg)
 	i = 0;
 	n = va_arg(arg, unsigned int);
 	if (n == 0)
-		return (write(1, "0", 1));
+		return (write(fd, "0", 1));
 	m = 1;
 	while (n / m >= 16)
 		m *= 16;
@@ -39,16 +40,17 @@ int	put_xlower(va_list arg)
 		m /= 16;
 	}
 	buff[i] = '\0';
-	return (write(1, &buff, ft_strlen(buff)));
+	return (write(fd, &buff, ft_strlen(buff)));
 }
 
 /**
  * put_X - Prints a number in hexadecimal
  *	uppercase format
  * @arg: the number to print (from va_list)
+ * @fd: the file descriptor to write in
  * Return: the number of writter bytes
  */
-int	put_xupper(va_list arg)
+int	put_xupper(va_list arg, int fd)
 {
 	char			buff[12];
 	char			*base;
@@ -59,7 +61,7 @@ int	put_xupper(va_list arg)
 	i = 0;
 	n = va_arg(arg, unsigned int);
 	if (n == 0)
-		return (write(1, "0", 1));
+		return (write(fd, "0", 1));
 	m = 1;
 	while (n / m >= 16)
 		m *= 16;
@@ -69,15 +71,16 @@ int	put_xupper(va_list arg)
 		m /= 16;
 	}
 	buff[i] = '\0';
-	return (write(1, &buff, ft_strlen(buff)));
+	return (write(fd, &buff, ft_strlen(buff)));
 }
 
 /**
  * put_p - prints the address in hexadecimal format
  * @arg: the address to print (from va_list)
+ * @fd: the file descriptor to write in
  * Return: the number of written bytes
  */
-int	put_p(va_list arg)
+int	put_p(va_list arg, int fd)
 {
 	char			buff[16];
 	char			*base;
@@ -87,7 +90,7 @@ int	put_p(va_list arg)
 	i = 0;
 	n = va_arg(arg, unsigned long int);
 	if (n == 0)
-		return (write(1, "(nil)", ft_strlen("(nil)")));
+		return (write(fd, "(nil)", ft_strlen("(nil)")));
 	m = 1;
 	while (n / m >= 16)
 		m *= 16;
@@ -98,5 +101,5 @@ int	put_p(va_list arg)
 	}
 	buff[i] = '\0';
 	write(1, "0x", 2);
-	return (write(1, &buff, ft_strlen(buff)) + 2);
+	return (write(fd, &buff, ft_strlen(buff)) + 2);
 }
