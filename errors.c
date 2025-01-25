@@ -102,16 +102,15 @@ void	print_error(void)
 
 /**
  * cleanup - Wrapper around cleaning operations
- * @strct: main components structure
+ * @strct: pointer to main components structure
  * @id1: first child process id
  * @id2: second child process id
- * @status: second child exit status
  */
-void	cleanup(t_pipex strct, pid_t id1, pid_t id2, int *status)
+void	cleanup(t_pipex *strct, pid_t id1, pid_t id2)
 {
-	free_2darray(strct.env);
-	close_pipe(strct.pipe_fd);
+	free_2darray(strct->env);
+	close_pipe(strct->pipe_fd);
 	waitpid(id1, NULL, 0);
-	waitpid(id2, status, 0);
+	waitpid(id2, &strct->status, 0);
 	print_error();
 }

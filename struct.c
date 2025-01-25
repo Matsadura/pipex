@@ -16,4 +16,5 @@ void	t_init(t_pipex *strct, char **envp, char **av)
 {
 	strct->env = parse_env(envp);
 	strct->av = av;
+	strct->status = 0;
 }

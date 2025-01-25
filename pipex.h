@@ -28,6 +28,7 @@ typedef struct s_pipex
 	char	**env;
 	char	**av;
 	int		pipe_fd[2];
+	int		status;
 }	t_pipex;
 
 void	t_init(t_pipex *strct, char **envp, char **av);
@@ -54,7 +55,7 @@ int		open_file(char *file_name, t_pipex strct, char mode);
 void	write_error(int mode, char *error_msg);
 void	handle_error_components(char *file_name);
 void	print_error(void);
-void	cleanup(t_pipex strct, pid_t id1, pid_t id2, int *status);
+void	cleanup(t_pipex *strct, pid_t id1, pid_t id2);
 int		check_access(char *name, int mode);
 
 /** Execution Functions */

@@ -17,7 +17,6 @@ int	main(int ac, char **av, char *envp[])
 	t_pipex	strct;
 	pid_t	id1;
 	pid_t	id2;
-	int		stat;
 
 	if (ac != 5)
 		return (ft_printf("Usage: ./pipex in cmd1 cmd2 out\n"), -1);
@@ -34,7 +33,6 @@ int	main(int ac, char **av, char *envp[])
 		exit(-1);
 	if (id2 == 0)
 		handle_child(strct, STDOUT_FILENO, 4);
-	stat = 0;
-	cleanup(strct, id1, id2, &stat);
-	return (WEXITSTATUS(stat));
+	cleanup(&strct, id1, id2);
+	return (WEXITSTATUS(strct.status));
 }
