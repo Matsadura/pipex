@@ -99,3 +99,19 @@ void	print_error(void)
 	handle_error_components("cmd0_error.log");
 	handle_error_components("cmd1_error.log");
 }
+
+/**
+ * cleanup - Wrapper around cleaning operations
+ * @strct: main components structure
+ * @id1: first child process id
+ * @id2: second child process id
+ * @status: second child exit status
+ */
+void	cleanup(t_pipex strct, pid_t id1, pid_t id2, int *status)
+{
+	free_2darray(strct.env);
+	close_pipe(strct.pipe_fd);
+	waitpid(id1, NULL, 0);
+	waitpid(id2, status, 0);
+	print_error();
+}
