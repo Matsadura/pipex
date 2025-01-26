@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors.c                                           :+:      :+:    :+:   */
+/*   errors_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zzaoui <zzaoui@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 17:48:59 by zzaoui            #+#    #+#             */
-/*   Updated: 2025/01/22 21:50:17 by zzaoui           ###   ########.fr       */
+/*   Updated: 2025/01/26 21:17:02 by zzaoui           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
 /**
  * check_access - Checks the command access
@@ -20,15 +20,18 @@
  */
 int	check_access(char *name, int mode)
 {
+	int	fd;
+
 	if (name == NULL || *name == '\0')
 	{
 		write_error(mode, ft_strjoin("''", CMD_404));
 		return (-1);
 	}
-	if (open(name, O_DIRECTORY) != -1)
+	fd = open(name, O_DIRECTORY);
+	if (fd != -1)
 	{
 		write_error(mode, ft_strjoin(name, IS_DIR));
-		return (-1);
+		return (close(fd), -1);
 	}
 	if (access(name, F_OK) != 0)
 	{
@@ -48,24 +51,28 @@ int	check_access(char *name, int mode)
  * @mode: Input our output
  * @error_msg: The error message to write
  */
-void	write_error(int mode, char *error_msg)
+void	write_error(int index, char *error_msg)
 {
-	int	fd;
+	int		fd;
+	char	*error_log_name;
+	char	*index_str;
 
+	index_str = ft_itoa(index);
+	error_log_name = ft_strjoin("error_log", index_str);
 	fd = -1;
-	unlink("cmd0_error.log");
-	unlink("cmd1_error.log");
-	if (mode == 0)
-		fd = open("cmd0_error.log", O_CREAT | O_RDWR | O_TRUNC, 0644);
-	else if (mode == 1)
-		fd = open("cmd1_error.log", O_CREAT | O_RDWR | O_TRUNC, 0644);
+	fd = open(error_log_name, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (fd < 0)
 	{
 		free(error_msg);
+		free(index_str);
+		free(error_log_name);
 		return ;
 	}
 	ft_dprintf(fd, "%s", error_msg);
 	free(error_msg);
+	free(index_str);
+	free(error_log_name);
+	close(fd);
 }
 
 /**
@@ -79,7 +86,7 @@ void	handle_error_components(char *file_name)
 	int		fd;
 	ssize_t	bytes;
 
-	fd = open(file_name, O_RDONLY, 0644);
+	fd = open(file_name, O_RDONLY);
 	if (fd < 0)
 		return ;
 	unlink(file_name);
@@ -96,10 +103,22 @@ void	handle_error_components(char *file_name)
 /**
  * print_error - Wrapper around handle_error_components
  */
-void	print_error(void)
+void	print_error(int n)
 {
-	handle_error_components("cmd0_error.log");
-	handle_error_components("cmd1_error.log");
+	int		i;
+	char	*index;
+	char	*file_name;
+
+	i = 0;
+	while (i < n)
+	{
+		index = ft_itoa(i);
+		file_name = ft_strjoin("error_log", index);
+		handle_error_components(file_name);
+		free(index);
+		free(file_name);
+		i++;
+	}
 }
 
 /**
@@ -114,5 +133,5 @@ void	cleanup(t_pipex *strct, pid_t id1, pid_t id2)
 	close_pipe(strct->pipe_fd);
 	waitpid(id1, NULL, 0);
 	waitpid(id2, &strct->status, 0);
-	print_error();
+	//print_error();
 }
