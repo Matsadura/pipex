@@ -6,7 +6,7 @@
 /*   By: zzaoui <zzaoui@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 17:48:59 by zzaoui            #+#    #+#             */
-/*   Updated: 2025/01/26 21:17:02 by zzaoui           ###   ########.fr       */
+/*   Updated: 2025/01/27 20:23:20 by zzaoui           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,14 +124,15 @@ void	print_error(int n)
 /**
  * cleanup - Wrapper around cleaning operations
  * @strct: pointer to main components structure
- * @id1: first child process id
- * @id2: second child process id
+ * @pid: last command process id
  */
-void	cleanup(t_pipex *strct, pid_t id1, pid_t id2)
+void	cleanup(t_pipex *strct, pid_t pid)
 {
+	waitpid(pid, &strct->status, 0);
+	if (strct->is_hdoc == TRUE)
+		unlink("here_doc.txt");
+	while (wait(NULL) > 0)
+		;
 	free_2darray(strct->env);
-	close_pipe(strct->pipe_fd);
-	waitpid(id1, NULL, 0);
-	waitpid(id2, &strct->status, 0);
-	//print_error();
+	print_error(strct->ncmd);
 }
