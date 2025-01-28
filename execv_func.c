@@ -27,7 +27,7 @@ void	handle_child(t_pipex strct, int mode, int index)
 	cmd = get_cmd(arg[0], strct.env);
 	if (cmd == NULL)
 	{
-		if (check_access(arg[0], mode) == -1)
+		if (check_access(arg[0]) == -1)
 		{
 			free_2darray(arg);
 			free_2darray(strct.env);

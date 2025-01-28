@@ -6,7 +6,7 @@
 /*   By: zzaoui <zzaoui@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 17:48:59 by zzaoui            #+#    #+#             */
-/*   Updated: 2025/01/22 21:50:17 by zzaoui           ###   ########.fr       */
+/*   Updated: 2025/01/28 16:29:57 by zzaoui           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,91 +15,44 @@
 /**
  * check_access - Checks the command access
  * @name: The command name
- * @mode: Input or output
  * Return: 0 in succes, -1 otherwise
  */
-int	check_access(char *name, int mode)
+int	check_access(char *name)
 {
+	int		fd;
+	char	*err;
+
 	if (name == NULL || *name == '\0')
 	{
-		write_error(mode, ft_strjoin("''", CMD_404));
-		return (-1);
+		err = ft_strjoin("''", CMD_404);
+		return (put_and_free(err), -1);
 	}
-	if (open(name, O_DIRECTORY) != -1)
+	fd = open(name, O_DIRECTORY);
+	if (fd != -1)
 	{
-		write_error(mode, ft_strjoin(name, IS_DIR));
-		return (-1);
+		err = ft_strjoin(name, IS_DIR);
+		return (close(fd), put_and_free(err), -1);
 	}
 	if (access(name, F_OK) != 0)
 	{
-		write_error(mode, ft_strjoin(name, CMD_404));
-		return (-1);
+		err = ft_strjoin(name, CMD_404);
+		return (put_and_free(err), -1);
 	}
 	else if (access(name, X_OK) != 0)
 	{
-		write_error(mode, ft_strjoin(name, CMD_403));
-		return (-1);
+		err = ft_strjoin(name, CMD_403);
+		return (put_and_free(err), -1);
 	}
 	return (0);
 }
 
 /**
- * write_error - Write the error message in it's corresponding log file
- * @mode: Input our output
- * @error_msg: The error message to write
+ * put_and_free - Prints to STDERR and frees the error message
  */
-void	write_error(int mode, char *error_msg)
+void	put_and_free(char *err)
 {
-	int	fd;
-
-	fd = -1;
-	unlink("cmd0_error.log");
-	unlink("cmd1_error.log");
-	if (mode == 0)
-		fd = open("cmd0_error.log", O_CREAT | O_RDWR | O_TRUNC, 0644);
-	else if (mode == 1)
-		fd = open("cmd1_error.log", O_CREAT | O_RDWR | O_TRUNC, 0644);
-	if (fd < 0)
-	{
-		free(error_msg);
-		return ;
-	}
-	ft_dprintf(fd, "%s", error_msg);
-	free(error_msg);
-}
-
-/**
- * handle_error_components - Reads the error in temporary log file, prints it,
- *		and unlinks it.
- * @file_name: The log file name
- */
-void	handle_error_components(char *file_name)
-{
-	char	buff[4096];
-	int		fd;
-	ssize_t	bytes;
-
-	fd = open(file_name, O_RDONLY, 0644);
-	if (fd < 0)
-		return ;
-	unlink(file_name);
-	bytes = 1;
-	while (bytes > 0)
-	{
-		bytes = read(fd, buff, sizeof(buff) - 1);
-		buff[bytes] = '\0';
-		ft_dprintf(2, "%s", buff);
-	}
-	close(fd);
-}
-
-/**
- * print_error - Wrapper around handle_error_components
- */
-void	print_error(void)
-{
-	handle_error_components("cmd0_error.log");
-	handle_error_components("cmd1_error.log");
+	ft_putstr_fd(err, 2);
+	free(err);
 }
 
 /**
@@ -114,5 +67,4 @@ void	cleanup(t_pipex *strct, pid_t id1, pid_t id2)
 	close_pipe(strct->pipe_fd);
 	waitpid(id1, NULL, 0);
 	waitpid(id2, &strct->status, 0);
-	print_error();
 }

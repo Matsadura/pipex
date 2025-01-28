@@ -52,11 +52,9 @@ int		open_file(char *file_name, t_pipex strct, char mode);
 
 /** Error handling functions **/
 
-void	write_error(int mode, char *error_msg);
-void	handle_error_components(char *file_name);
-void	print_error(void);
+void	put_and_free(char *err);
 void	cleanup(t_pipex *strct, pid_t id1, pid_t id2);
-int		check_access(char *name, int mode);
+int		check_access(char *name);
 
 /** Execution Functions */
 

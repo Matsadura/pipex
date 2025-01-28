@@ -6,7 +6,7 @@
 /*   By: zzaoui <zzaoui@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 17:39:12 by zzaoui            #+#    #+#             */
-/*   Updated: 2025/01/23 16:26:12 by zzaoui           ###   ########.fr       */
+/*   Updated: 2025/01/27 21:51:01 by zzaoui           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	open_file(char *file_name, t_pipex strct, char mode)
 	{
 		perror(file_name);
 		free_2darray(strct.env);
-		exit(13);
+		exit(1);
 	}
 	return (fd);
 }

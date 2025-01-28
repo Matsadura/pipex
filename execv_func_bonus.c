@@ -6,13 +6,19 @@
 /*   By: zzaoui <zzaoui@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 17:09:08 by zzaoui            #+#    #+#             */
-/*   Updated: 2025/01/27 20:25:18 by zzaoui           ###   ########.fr       */
+/*   Updated: 2025/01/27 20:42:41 by zzaoui           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-void	execute_cmd(char *arg, char **env, int index)
+/**
+ * execute_cmd - Executes a command
+ * @arg: The command with it's arguments
+ * @env: The path variable
+ * @index: The command index
+ */
+void	execute_cmd(char *arg, char **env)
 {
 	char	**args;
 	char	*cmd;
@@ -21,7 +27,7 @@ void	execute_cmd(char *arg, char **env, int index)
 	cmd = get_cmd(args[0], env);
 	if (cmd == NULL)
 	{
-		if (check_access(args[0], index) == -1)
+		if (check_access(args[0]) == -1)
 		{
 			free_2darray(args);
 			free_2darray(env);
@@ -66,9 +72,9 @@ void	handle_child(t_pipex strct, int idx)
 					strct.pipe_fd[WRITE_END], STDOUT);
 	}
 	if (strct.is_hdoc == TRUE)
-		execute_cmd(strct.av[idx + 3], strct.env, idx);
+		execute_cmd(strct.av[idx + 3], strct.env);
 	else
-		execute_cmd(strct.av[idx + 2], strct.env, idx);
+		execute_cmd(strct.av[idx + 2], strct.env);
 }
 
 /**

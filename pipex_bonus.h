@@ -71,17 +71,15 @@ int		open_output_file(t_pipex strct);
 
 /** Error handling functions **/
 
-void	write_error(int mode, char *error_msg);
-void	handle_error_components(char *file_name);
-void	print_error(int n);
+void	put_and_free(char *err);
 void	cleanup(t_pipex *strct, pid_t pid);
 void	check_pipe(int pipe_return, t_pipex strct);
-int		check_access(char *name, int mode);
+int		check_access(char *name);
 pid_t	fork_and_check(t_pipex strct);
 
 /** Execution Functions */
 
-void	execute_cmd(char *arg, char **env, int index);
+void	execute_cmd(char *arg, char **env);
 void	handle_child(t_pipex strct, int idx);
 void	handle_parent(t_pipex *strct, int idx);
 
