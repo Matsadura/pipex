@@ -39,6 +39,7 @@ typedef struct s_pipex
 	char	*delim;
 	char	*infile;
 	char	*outfile;
+	char	*here_doc_file;
 	int		out_perms;
 	int		ncmd;
 	int		pipe_fd[2];
@@ -79,7 +80,7 @@ pid_t	fork_and_check(t_pipex strct);
 
 /** Execution Functions */
 
-void	execute_cmd(char *arg, char **env);
+void	execute_cmd(char *arg, char **env, t_pipex strct);
 void	handle_child(t_pipex strct, int idx);
 void	handle_parent(t_pipex *strct, int idx);
 

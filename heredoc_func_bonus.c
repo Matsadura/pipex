@@ -6,11 +6,32 @@
 /*   By: zzaoui <zzaoui@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 12:27:42 by zzaoui            #+#    #+#             */
-/*   Updated: 2025/01/27 20:21:25 by zzaoui           ###   ########.fr       */
+/*   Updated: 2025/01/28 19:39:23 by zzaoui           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
+
+/**
+ *
+ */
+static char	*random_name(void)
+{
+	long	n;
+	char	*name;
+
+	n = 1;
+	name = ft_ltoa((long) &n);
+	while (1)
+	{
+		if (access(name, F_OK) == -1)
+			break ;
+		free(name);
+		n++;
+		name = ft_ltoa((long) &n);
+	}
+	return (name);
+}
 
 /**
  * handle_heredoc - Checks if a heredoc is present and updates
@@ -21,7 +42,7 @@ void	handle_heredoc(t_pipex *strct)
 {
 	if (ft_strncmp("here_doc", strct->av[1], ft_strlen(strct->av[1])) == 0)
 	{
-		strct->infile = "here_doc.txt";
+		strct->infile = random_name();
 		strct->out_perms = O_CREAT | O_WRONLY | O_APPEND;
 		strct->ncmd -= 1;
 		strct->delim = strct->av[2];

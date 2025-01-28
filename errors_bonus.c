@@ -64,7 +64,10 @@ void	cleanup(t_pipex *strct, pid_t pid)
 {
 	waitpid(pid, &strct->status, 0);
 	if (strct->is_hdoc == TRUE)
-		unlink("here_doc.txt");
+	{
+		unlink(strct->infile);
+		free(strct->infile);
+	}
 	while (wait(NULL) > 0)
 		;
 	free_2darray(strct->env);

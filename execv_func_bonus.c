@@ -13,12 +13,23 @@
 #include "pipex_bonus.h"
 
 /**
+ * 
+ */
+static void	check_and_free(t_pipex strct, char **args, char **env)
+{
+	if (strct.is_hdoc == TRUE)
+		free(strct.infile);
+	free_2darray(args);
+	free_2darray(env);
+}
+
+/**
  * execute_cmd - Executes a command
  * @arg: The command with it's arguments
  * @env: The path variable
  * @index: The command index
  */
-void	execute_cmd(char *arg, char **env)
+void	execute_cmd(char *arg, char **env, t_pipex strct)
 {
 	char	**args;
 	char	*cmd;
@@ -29,16 +40,14 @@ void	execute_cmd(char *arg, char **env)
 	{
 		if (check_access(args[0]) == -1)
 		{
-			free_2darray(args);
-			free_2darray(env);
+			check_and_free(strct, args, env);
 			exit(127);
 		}
 	}
 	if (execve(cmd, args, env) == -1)
 	{
 		perror(cmd);
-		free_2darray(args);
-		free_2darray(env);
+		check_and_free(strct, args, env);
 		free(cmd);
 		exit(126);
 	}
@@ -72,9 +81,9 @@ void	handle_child(t_pipex strct, int idx)
 					strct.pipe_fd[WRITE_END], STDOUT);
 	}
 	if (strct.is_hdoc == TRUE)
-		execute_cmd(strct.av[idx + 3], strct.env);
+		execute_cmd(strct.av[idx + 3], strct.env, strct);
 	else
-		execute_cmd(strct.av[idx + 2], strct.env);
+		execute_cmd(strct.av[idx + 2], strct.env, strct);
 }
 
 /**
