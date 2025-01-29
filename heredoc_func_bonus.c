@@ -6,7 +6,7 @@
 /*   By: zzaoui <zzaoui@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 12:27:42 by zzaoui            #+#    #+#             */
-/*   Updated: 2025/01/28 19:39:23 by zzaoui           ###   ########.fr       */
+/*   Updated: 2025/01/29 16:32:04 by zzaoui           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static char	*random_name(void)
  */
 void	handle_heredoc(t_pipex *strct)
 {
-	if (ft_strncmp("here_doc", strct->av[1], ft_strlen(strct->av[1])) == 0)
+	if (ft_strncmp("here_doc", strct->av[1], ft_strlen("here_doc") + 1) == 0)
 	{
 		strct->infile = random_name();
 		strct->out_perms = O_CREAT | O_WRONLY | O_APPEND;
