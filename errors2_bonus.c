@@ -6,7 +6,7 @@
 /*   By: zzaoui <zzaoui@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 19:58:19 by zzaoui            #+#    #+#             */
-/*   Updated: 2025/01/27 21:52:45 by zzaoui           ###   ########.fr       */
+/*   Updated: 2025/01/29 19:40:11 by zzaoui           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	check_pipe(int pipe_return, t_pipex strct)
 {
 	if (pipe_return == -1)
 	{
-		ft_dprintf(STDERR, "Pipe creation failed\n");
+		perror("Pipe");
 		free_2darray(strct.env);
 		exit(-1);
 	}
@@ -39,7 +39,7 @@ pid_t	fork_and_check(t_pipex strct)
 	pid = fork();
 	if (pid == -1)
 	{
-		ft_dprintf(STDERR, "Fork creation failed\n");
+		perror("Fork");
 		free_2darray(strct.env);
 		exit(-1);
 	}
