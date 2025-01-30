@@ -6,7 +6,7 @@
 /*   By: zzaoui <zzaoui@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 12:27:42 by zzaoui            #+#    #+#             */
-/*   Updated: 2025/01/29 16:32:04 by zzaoui           ###   ########.fr       */
+/*   Updated: 2025/01/30 14:27:33 by zzaoui           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static char	*random_name(void)
 {
 	long	n;
 	char	*name;
+	char	*full_name;
 
 	n = 1;
 	name = ft_ltoa((long) &n);
@@ -30,7 +31,9 @@ static char	*random_name(void)
 		n++;
 		name = ft_ltoa((long) &n);
 	}
-	return (name);
+	full_name = ft_strjoin("/tmp/", name);
+	free(name);
+	return (full_name);
 }
 
 /**
@@ -67,7 +70,7 @@ void	write_in_heredoc(t_pipex strct)
 	delim = ft_strjoin(strct.delim, "\n");
 	if (delim == NULL)
 		close(fd);
-	ft_printf("> ");
+	ft_dprintf(0, "> ");
 	line = get_next_line(0);
 	while (line != NULL)
 	{
@@ -92,5 +95,5 @@ void	write_in_heredoc(t_pipex strct)
 void	put_and_print(char *line, int fd)
 {
 	ft_putstr_fd(line, fd);
-	ft_printf("> ");
+	ft_dprintf(0, "> ");
 }
